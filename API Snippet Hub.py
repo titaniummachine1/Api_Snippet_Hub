@@ -54,12 +54,12 @@ def on_search(event=None):
             results_frame,
             text=f"{table['Title']}\n{table['subTitle']}",
             font=("Arial", 12),
-            fg="blue",
+            fg="black",
             cursor="hand2",
-            padx=5,
-            pady=5,
-            bg="#E0E0E0",
-            activebackground="#C0C0C0",
+            padx=10,
+            pady=10,
+            bg="#4CAF50",
+            activebackground="#3E8E41",
             command=lambda table=table: show_table_doc(table),
         )
         doc_button.grid(row=i, column=0, sticky="w")
@@ -82,6 +82,7 @@ search_label.pack(side="top")
 search_entry = tk.Entry(root, width=77)
 search_entry.pack(side="top")
 # Bind the search entry to the on_search function
+
 search_entry.bind("<KeyRelease>", lambda event: on_search())
 results_frame = tk.Frame(root)
 results_frame.pack()

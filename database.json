@@ -1,8 +1,8 @@
 {
     "tables": [
         {
-            "Title": "Eye Position",
-            "subTitle": "",
+            "Title": "View/eye Position",
+            "subTitle": "Returns Local View/eye Position",
             "dLine": {
                 "1": "This table contains information about the users of the system.",
                 "2": "d",
