@@ -33,12 +33,25 @@ def show_table_doc(table):
     for line in table["dLine"].values():
         if line:
             doc_text.insert("end", line + "\n")
+    doc_text.insert("end", "\n")  # Add a newline character between the two sets of values
+    s_lines = ""
     for line in table["SLine"].values():
         if line:
             doc_text.insert("end", line + "\n")
+            s_lines += line + "\n"
     doc_text.pack(side="left", fill="both", expand=True)
     scrollbar.config(command=doc_text.yview)
     doc_text.config(state="disabled")
+    
+    # Copy the SLines to the clipboard
+    window.clipboard_clear()
+    window.clipboard_append(s_lines)
+
+    
+
+    
+    
+
 
 
 def on_search(event=None):
