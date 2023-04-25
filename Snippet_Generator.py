@@ -64,7 +64,7 @@ subtitle_entry = tk.Entry(root)
 subtitle_entry.grid(row=1, column=1, padx=5, pady=5)
 
 description_label = tk.Label(root, text="Description:")
-description_label.grid(row=2, column=0, padx=5, pady=5)
+description_label.grid(row=2, column=0, padx=10, pady=10)
 
 description_text = tk.Text(root, height=10)
 description_text.grid(row=2, column=1, padx=5, pady=5)
@@ -73,9 +73,23 @@ source_label = tk.Label(root, text="Source Code:")
 source_label.grid(row=3, column=0, padx=5, pady=5)
 
 source_text = tk.Text(root, height=10)
-source_text.grid(row=3, column=1, padx=5, pady=5)
+source_text.grid(row=3, column=1, padx=150, pady=5)
 
 create_table_button = tk.Button(root, text="Create Snippet", command=create_table)
 create_table_button.grid(row=4, column=1, padx=5, pady=5)
+
+# set the width and height of the window
+width = 1000
+height = 700
+# get the screen width and height
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+# calculate the x and y coordinates to center the window
+x = (screen_width/2) - (width/2)
+y = (screen_height/2) - (height/2)
+
+# set the position of the window
+root.geometry("{}x{}+{}+{}".format(width, height, int(x), int(y)))
 
 root.mainloop()

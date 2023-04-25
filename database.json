@@ -1,24 +1,6 @@
 {
     "tables": [
         {
-            "Title": "View/eye Position",
-            "subTitle": "Returns Local View/eye Position",
-            "dLine": {
-                "1": "This table contains information about the users of the system.",
-                "2": "d",
-                "3": "d",
-                "4": "d",
-                "5": "d"
-            },
-            "SLine": {
-                "1": "s",
-                "2": "s",
-                "3": "s",
-                "4": "s",
-                "5": "s"
-            }
-        },
-        {
             "Title": "Menu Checkbox",
             "subTitle": "example checkbox snippet",
             "dLine": {
@@ -29,6 +11,42 @@
             },
             "SLine": {
                 "1": "local mEnable       = menu:AddComponent(MenuLib.Checkbox(\"Enable\", true))"
+            }
+        },
+        {
+            "Title": "Get Screen Size",
+            "subTitle": "sets w nd h values",
+            "dLine": {
+                "1": "literaly sets screen_w and screen_h"
+            },
+            "SLine": {
+                "1": "local screen_w, screen_h = client.GetScreenSize()"
+            }
+        },
+        {
+            "Title": "menu lib setup",
+            "subTitle": "initialize menu",
+            "dLine": {
+                "1": "checks if you got menu.lua installed and if so it will load it and create menu"
+            },
+            "SLine": {
+                "1": "local menuLoaded, MenuLib = pcall(require, \"Menu\")                                -- Load MenuLib",
+                "2": "assert(menuLoaded, \"MenuLib not found, please install it!\")                       -- If not found, throw error",
+                "3": "assert(MenuLib.Version >= 1.44, \"MenuLib version is too old, please update it!\")  -- If version is too old, throw error",
+                "5": "--[[ Menu ]]--",
+                "6": "local menu = MenuLib.Create(\"Examplename\", MenuFlags.AutoSize)",
+                "7": "menu.Style.TitleBg = { 205, 95, 50, 255 } -- Title Background Color (Flame Pea)",
+                "8": "menu.Style.Outline = true                 -- Outline around the menu"
+            }
+        },
+        {
+            "Title": "menu slider",
+            "subTitle": "example slider",
+            "dLine": {
+                "1": "sets local value to variable set in menu usign slider with first valeu beeing min second max and third default on load."
+            },
+            "SLine": {
+                "1": "local mtime         = menu:AddComponent(MenuLib.Slider(\"attack distance\", 200 ,275 , 240 ))"
             }
         }
     ]

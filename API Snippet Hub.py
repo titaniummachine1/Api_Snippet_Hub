@@ -30,6 +30,20 @@ def show_table_doc(table):
     scrollbar = tk.Scrollbar(window)
     scrollbar.pack(side="right", fill="y")
     doc_text = tk.Text(window, wrap="word", yscrollcommand=scrollbar.set)
+    # set the width and height of the window
+    width = 1200
+    height = 800
+    # get the screen width and height
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+
+    # calculate the x and y coordinates to center the window
+    x = (screen_width/2) - (width/2)
+    y = (screen_height/2) - (height/2)
+
+    # set the position of the window
+    window.geometry("{}x{}+{}+{}".format(width, height, int(x), int(y)))
+    
     for line in table["dLine"].values():
         if line:
             doc_text.insert("end", line + "\n")
@@ -101,8 +115,8 @@ results_frame = tk.Frame(root)
 results_frame.pack()
 root.configure(bg="#1B1F23")
 # set the width and height of the window
-width = 800
-height = 600
+width = 1000
+height = 800
 # get the screen width and height
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
