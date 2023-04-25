@@ -31,7 +31,7 @@ def show_table_doc(table):
     scrollbar.pack(side="right", fill="y")
     doc_text = tk.Text(window, wrap="word", yscrollcommand=scrollbar.set)
     # set the width and height of the window
-    width = 1200
+    width = 1000
     height = 800
     # get the screen width and height
     screen_width = window.winfo_screenwidth()
@@ -43,7 +43,6 @@ def show_table_doc(table):
 
     # set the position of the window
     window.geometry("{}x{}+{}+{}".format(width, height, int(x), int(y)))
-    
     for line in table["dLine"].values():
         if line:
             doc_text.insert("end", line + "\n")
