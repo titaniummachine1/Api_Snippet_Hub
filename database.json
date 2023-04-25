@@ -17,6 +17,19 @@
                 "4": "s",
                 "5": "s"
             }
+        },
+        {
+            "Title": "Menu Checkbox",
+            "subTitle": "example checkbox snippet",
+            "dLine": {
+                "1": "mEnable can be replaced with any variable as we are defining here variable",
+                "2": "that we get with :GetValue() in code",
+                "4": "(\"Enable\", true) has string with title of checkbox and true represents",
+                "5": "Default Value"
+            },
+            "SLine": {
+                "1": "local mEnable       = menu:AddComponent(MenuLib.Checkbox(\"Enable\", true))"
+            }
         }
     ]
 }
