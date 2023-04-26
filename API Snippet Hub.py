@@ -1,4 +1,5 @@
 import tkinter as tk
+import difflib
 
 from DownlaodData import download_database
 
@@ -63,14 +64,15 @@ def show_table_doc(table):
     
 
     
-    
-
-
 
 def on_search(event=None):
     # Called when the search entry changes
     query = search_entry.get().lower()
     search_results = search_tables(query)
+    
+    # Sort the results based on the similarity of their title to the search query
+    search_results.sort(key=lambda x: difflib.SequenceMatcher(None, x['Title'].lower(), query).ratio(), reverse=True)
+    
     # Clear the results frame
     for widget in results_frame.winfo_children():
         widget.destroy()

@@ -89,8 +89,18 @@
             }
         },
         {
-            "Title": "CreateMove",
-            "subTitle": "local function Creat",
+            "Title": "Get Local Player",
+            "subTitle": "pLocal / me / local player",
+            "dLine": {
+                "14": "it gets local player entity"
+            },
+            "SLine": {
+                "1": "local pLocal = entities.GetLocalPlayer()"
+            }
+        },
+        {
+            "Title": "Menu Load button setup",
+            "subTitle": "setup load and unload",
             "dLine": {
                 "14": "local function CreateMove(pCmd)",
                 "65": "callbacks.Unregister(\"CreateMove\", \"CreateMove_Freecam\")",
