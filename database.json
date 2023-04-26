@@ -53,7 +53,7 @@
             },
             "SLine": {
                 "1": "function CalculateProjectilePath(startPos, endPos, velocity)\n    local distance = (end",
-                "2": "function CalculateProjectilePath(startPos, endPos, velocity)\n    local distance = (end"
+                "2": "local path = CalculateProjectilePath(source, endPos, FIXED_VELOCITY)"
             }
         },
         {
@@ -110,7 +110,7 @@
                 "24": "callbacks.Register( \"Draw\", \"CriticalHealth\", CriticalHealth)"
             },
             "SLine": {
-                "1": "function CriticalHealth()\n\n    if gamecoordinator.IsConnectedToMatchServer() then\n\n        local players = entities.FindByClass(\"CTFPlayer\")\n\n        for i, p in ipairs( players ) do\n            \n            Ratio = p:GetHealth() / p:GetMaxHealth()\n            \n            if (p:IsAlive()) and (Ratio <= procent) then\n                playerlist.SetPriority( p, 1 )\n            else\n                playerlist.SetPriority( p, 0 )\n            end",
+                "1": "local function CriticalHealth()",
                 "2": "callbacks.Register( \"Draw\", \"CriticalHealth\", CriticalHealth)"
             }
         },
@@ -122,8 +122,8 @@
                 "28": "if not DT_Enabled() then return end"
             },
             "SLine": {
-                "1": "function DT_Enabled()\n    local dtMode = gui.GetValue(\"double tap (beta)\")\n    local dashKey = gui.GetValue(\"dash move key\")\n\n    return dtMode ~= \"off\" or dashKey ~= 0\nend",
-                "2": "function DT_Enabled()\n    local dtMode = gui.GetValue(\"double tap (beta)\")\n    local dashKey = gui.GetValue(\"dash move key\")\n\n    return dtMode ~= \"off\" or dashKey ~= 0\nend"
+                "1": "local function DT_Enabled()",
+                "2": "if not DT_Enabled() then return end"
             }
         },
         {
@@ -162,7 +162,7 @@
                 "127": "gameData = GameData()  -- Update gameData with latest information"
             },
             "SLine": {
-                "1": "function GameData()\n    local data = {}\n\n    -- Get local player data\n    data.pLocal = entities.GetLocalPlayer()     -- Immediately set \"pLocal\" to the local player (entities.GetLocalPlayer)\n    data.pWeapon = data.pLocal:GetPropEntity(\"m_hActiveWeapon\")\n    data.swingrange = data.pWeapon:GetSwingRange() -- + 11.17\n    data.tickRate = 66 -- game tick rate\n    --get pLocal eye level and set vector at our eye level to ensure we cehck distance from eyes\n    local viewOffset = data.pLocal:GetPropVector(\"localdata\", \"m_vecViewOffset[0]\")\n    local adjustedHeight = data.pLocal:GetAbsOrigin() + viewOffset\n    data.viewheight = (adjustedHeight - data.pLocal:GetAbsOrigin()):Length()\n        -- eye level \n        local Vheight = Vector3(0, 0, data.viewheight)\n        data.pLocalOrigin = (data.pLocal:GetAbsOrigin() + Vheight)\n    --get local class\n    data.pLocalClass = data.pLocal:GetPropInt(\"m_iClass\")\n\n\n    return data\nend",
+                "1": "function GameData()",
                 "2": "gameData = GameData()  -- Update gameData with latest information"
             }
         },
@@ -175,9 +175,9 @@
                 "535": "local AimbotTarget = GetBestTarget(me)"
             },
             "SLine": {
-                "1": "function GetBestTarget(me, pLocalOrigin, pLocal)\n    -- Find all players in the game\n    players = entities.FindByClass(\"CTFPlayer\")\n\n    -- Initialize variables\n    local target = nil\n    local lastFov = math.huge\n    local closestPlayer = nil\n    local closestDistance = math.huge\n    local options = {\n        AimPos = 1,\n        AimFov = 360\n    }\n    \n    -- Loop through all players\n    for _, entity in pairs(players) do\n        -- Skip the local player\n        if entity == pLocal then goto continue end",
-                "2": "function GetBestTarget(me, pLocalOrigin, pLocal)\n    -- Find all players in the game\n    players = entities.FindByClass(\"CTFPlayer\")\n\n    -- Initialize variables\n    local target = nil\n    local lastFov = math.huge\n    local closestPlayer = nil\n    local closestDistance = math.huge\n    local options = {\n        AimPos = 1,\n        AimFov = 360\n    }\n    \n    -- Loop through all players\n    for _, entity in pairs(players) do\n        -- Skip the local player\n        if entity == pLocal then goto continue end",
-                "3": "function GetBestTarget(me, pLocalOrigin, pLocal)\n    -- Find all players in the game\n    players = entities.FindByClass(\"CTFPlayer\")\n\n    -- Initialize variables\n    local target = nil\n    local lastFov = math.huge\n    local closestPlayer = nil\n    local closestDistance = math.huge\n    local options = {\n        AimPos = 1,\n        AimFov = 360\n    }\n    \n    -- Loop through all players\n    for _, entity in pairs(players) do\n        -- Skip the local player\n        if entity == pLocal then goto continue end"
+                "1": "local function GetBestTarget(me, pLocalOrigin, pLocal)",
+                "2": "local currentTarget1 = GetBestTarget(me, pLocalOrigin) --GetClosestTarget(me, me:GetAbsOrigin()) -- Get the best target",
+                "3": "local AimbotTarget = GetBestTarget(me)"
             }
         },
         {
@@ -189,9 +189,9 @@
                 "473": "local currentKey = GetCurrentKey()"
             },
             "SLine": {
-                "1": "function GetCurrentKey()\n    for i = 0, 106 do\n        if input.IsButtonDown(i) then\n            return i\n        end",
-                "2": "function GetKeyName(key, specialKeys)\n    if key == nil then return nil end",
-                "3": "function GetCurrentKey()\n    for i = 0, 106 do\n        if input.IsButtonDown(i) then\n            return i\n        end"
+                "1": "local function GetCurrentKey()",
+                "2": "local key = GetKeyName(GetCurrentKey(), false)",
+                "3": "local currentKey = GetCurrentKey()"
             }
         },
         {
@@ -202,8 +202,8 @@
                 "38": "local fileList = GetFileList(currentPath)"
             },
             "SLine": {
-                "1": "function GetFileList(path)\n    local files = {}\n\n    pcall(function()\n        filesystem.EnumerateDirectory(path .. \"*\", function (filename, attributes)\n            if filename == \".\" or filename == \"..\" then return end",
-                "2": "function GetFileList(path)\n    local files = {}\n\n    pcall(function()\n        filesystem.EnumerateDirectory(path .. \"*\", function (filename, attributes)\n            if filename == \".\" or filename == \"..\" then return end"
+                "1": "local function GetFileList(path)",
+                "2": "local fileList = GetFileList(currentPath)"
             }
         },
         {
@@ -214,8 +214,8 @@
                 "26": "local chatMessage = GetRandomMessage() .. \"\\n\" .. pVictim .. \":\\n\\n\" .."
             },
             "SLine": {
-                "1": "function GetRandomMessage()\n    return randMsg[math.random(#randMsg)]\nend",
-                "2": "function GetRandomMessage()\n    return randMsg[math.random(#randMsg)]\nend"
+                "1": "local function GetRandomMessage()",
+                "2": "local chatMessage = GetRandomMessage() .. \"\\n\" .. pVictim .. \":\\n\\n\" .."
             }
         },
         {
@@ -229,8 +229,8 @@
                 "20": "print(\"Loaded \", textbox1)"
             },
             "SLine": {
-                "1": "function Load()\n    LoadScript(textbox)\n    print(\"Loaded \", textbox1)\nend",
-                "2": "function Load()\n    LoadScript(textbox)\n    print(\"Loaded \", textbox1)\nend"
+                "1": "Load()",
+                "2": "function Load()"
             }
         },
         {
@@ -241,7 +241,7 @@
                 "17": "menu:AddComponent(MenuLib.Button(\"Press Me!\", OnButtonPress, ItemFlags.FullWidth))"
             },
             "SLine": {
-                "1": "function OnButtonPress() \n    print(\"Button pressed!\")\nend"
+                "1": "function OnButtonPress()"
             }
         },
         {
@@ -252,7 +252,7 @@
                 "63": "menu:AddComponent(MenuLib.Button(\"Press Me!\", OnButtonPress, ItemFlags.FullWidth))"
             },
             "SLine": {
-                "1": "function OnButtonPress() \n    print(\"Button pressed!\")\nend"
+                "1": "No SLine"
             }
         },
         {
@@ -263,7 +263,7 @@
                 "85": "callbacks.Register(\"CreateMove\", \"PR_CreateMove\", OnCreateMove)"
             },
             "SLine": {
-                "1": "function OnCreateMove()\n    -- check if the \"Enable\" button is checked\n    if Options.Enabled:GetValue() then\n        -- get the local player\n        local medic = entities.GetLocalPlayer()\n\n        -- get the players on the team\n        local players = entities.FindByClass(\"CTFPlayer\")\n\n        -- initialize a variable to store the target player\n        local target = nil\n\n        -- loop through all the players on the team\n        for i, player in ipairs(players) do\n            -- check if the player is a teammate and is damaged\n            if player:GetTeamNumber() == medic:GetTeamNumber() and player:GetHealth() < Options.targethealth:GetValue() then\n                -- set the target player\n                target = player\n                break\n            end",
+                "1": "local function OnCreateMove()",
                 "2": "callbacks.Register(\"CreateMove\", \"PR_CreateMove\", OnCreateMove)"
             }
         },
@@ -342,7 +342,7 @@
                 "57": "callbacks.Register(\"CreateMove\", \"PR_CreateMove\", OnCreateMove)"
             },
             "SLine": {
-                "1": "function OnCreateMove()\n    if not Options.Enabled:GetValue() then return end"
+                "1": "No SLine"
             }
         },
         {
@@ -353,7 +353,7 @@
                 "50": "callbacks.Register(\"Draw\", \"CI_Draw\", OnDraw)"
             },
             "SLine": {
-                "1": "function OnDraw()\n    draw.Color(255, 255, 255, 255)\n    draw.SetFont(Options.Font)\n\n    local pLocal = entities.GetLocalPlayer()\n    if not pLocal then return end",
+                "1": "local function OnDraw()",
                 "2": "callbacks.Register(\"Draw\", \"CI_Draw\", OnDraw)"
             }
         },
@@ -405,7 +405,7 @@
             },
             "SLine": {
                 "1": "function RGBRainbow(frequency)\n\n    local curtime = globals.CurTime() \n    local r,g,b\n    r = math.floor(math.sin(curtime * frequency + 0) * 127 + 128)\n    g = math.floor(math.sin(curtime * frequency + 2) * 127 + 128)\n    b = math.floor(math.sin(curtime * frequency + 4) * 127 + 128)\n    \n    return r, g, b\nend",
-                "2": "function RGBRainbow(frequency)\n\n    local curtime = globals.CurTime() \n    local r,g,b\n    r = math.floor(math.sin(curtime * frequency + 0) * 127 + 128)\n    g = math.floor(math.sin(curtime * frequency + 2) * 127 + 128)\n    b = math.floor(math.sin(curtime * frequency + 4) * 127 + 128)\n    \n    return r, g, b\nend"
+                "2": "local r, g, b = RGBRainbow(2.5)"
             }
         },
         {
@@ -417,7 +417,7 @@
             },
             "SLine": {
                 "1": "function RGBRainbow(offset)\n    local r,g,b\n    r = math.floor(math.sin(offset + 0) * 127 + 128)\n    g = math.floor(math.sin(offset + 2) * 127 + 128)\n    b = math.floor(math.sin(offset + 4) * 127 + 128)\n  \n    return r, g, b\nend",
-                "2": "function RGBRainbow(offset)\n    local r,g,b\n    r = math.floor(math.sin(offset + 0) * 127 + 128)\n    g = math.floor(math.sin(offset + 2) * 127 + 128)\n    b = math.floor(math.sin(offset + 4) * 127 + 128)\n  \n    return r, g, b\nend"
+                "2": "local r, g, b = RGBRainbow(i)"
             }
         },
         {
@@ -429,7 +429,7 @@
             },
             "SLine": {
                 "1": "function RGBRainbow(frequency)\n  local curtime = globals.CurTime() \n  local r,g,b\n  r = math.floor(math.sin(curtime * frequency + 0) * 127 + 128)\n  g = math.floor(math.sin(curtime * frequency + 2) * 127 + 128)\n  b = math.floor(math.sin(curtime * frequency + 4) * 127 + 128)\n\n  return r, g, b\nend",
-                "2": "function RGBRainbow(frequency)\n  local curtime = globals.CurTime() \n  local r,g,b\n  r = math.floor(math.sin(curtime * frequency + 0) * 127 + 128)\n  g = math.floor(math.sin(curtime * frequency + 2) * 127 + 128)\n  b = math.floor(math.sin(curtime * frequency + 4) * 127 + 128)\n\n  return r, g, b\nend"
+                "2": "local r, g, b = RGBRainbow(1)"
             }
         },
         {
@@ -441,7 +441,7 @@
             },
             "SLine": {
                 "1": "function ReadFile(path)\n    local file = io.open(path, \"rb\") -- r read mode and b binary mode\n    if not file then return nil end",
-                "2": "function ReadFile(path)\n    local file = io.open(path, \"rb\") -- r read mode and b binary mode\n    if not file then return nil end"
+                "2": "local playerList = ReadFile(Options.File)"
             }
         },
         {
@@ -452,8 +452,7 @@
                 "20": "local playerList = ReadFile(Options.File)"
             },
             "SLine": {
-                "1": "function ReadFile(path)\n    local file = io.open(path, \"rb\") -- r read mode and b binary mode\n    if not file then return nil end",
-                "2": "function ReadFile(path)\n    local file = io.open(path, \"rb\") -- r read mode and b binary mode\n    if not file then return nil end"
+                "1": "function ReadFile(path)\n    local file = io.open(path, \"rb\") -- r read mode and b binary mode\n    if not file then return nil end"
             }
         },
         {
@@ -464,8 +463,8 @@
                 "159": "ResetTempOptions()                               -- Immediately reset \"TempOptions\""
             },
             "SLine": {
-                "1": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end",
-                "2": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end"
+                "1": "local function ResetTempOptions()                                  -- Reset \"TempOptions\"",
+                "2": "ResetTempOptions()                               -- Immediately reset \"TempOptions\""
             }
         },
         {
@@ -476,8 +475,7 @@
                 "143": "ResetTempOptions()                               -- Immediately reset \"TempOptions\""
             },
             "SLine": {
-                "1": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end",
-                "2": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end"
+                "1": "No SLine"
             }
         },
         {
@@ -488,8 +486,7 @@
                 "126": "ResetTempOptions()                               -- Immediately reset \"TempOptions\""
             },
             "SLine": {
-                "1": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end",
-                "2": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end"
+                "1": "No SLine"
             }
         },
         {
@@ -500,8 +497,7 @@
                 "144": "ResetTempOptions()                               -- Immediately reset \"TempOptions\""
             },
             "SLine": {
-                "1": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end",
-                "2": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end"
+                "1": "No SLine"
             }
         },
         {
@@ -512,8 +508,7 @@
                 "144": "ResetTempOptions()                               -- Immediately reset \"TempOptions\""
             },
             "SLine": {
-                "1": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end",
-                "2": "function ResetTempOptions()                                  -- Reset \"TempOptions\"\n    for k, v in pairs(TempOptions) do                              -- Loop through all options in \"TempOptions\"\n        TempOptions[k].WasUsed = false                             -- Set \"WasUsed\" to false for each option (so we can check if it was used)\n    end"
+                "1": "No SLine"
             }
         },
         {
@@ -528,10 +523,9 @@
                 "85": "SearchFeatures()"
             },
             "SLine": {
-                "1": "function SearchFeatures()\n    results = {} -- Clear the results table\n\n    -- Search for features matching the query\n    for section, features in pairs(mainTable) do\n        for i, feature in ipairs(features) do\n            if string.match(feature:lower(), searchQuery:lower()) then\n                table.insert(results, { feature, section })\n            end",
-                "2": "function SearchFeatures()\n    results = {} -- Clear the results table\n\n    -- Search for features matching the query\n    for section, features in pairs(mainTable) do\n        for i, feature in ipairs(features) do\n            if string.match(feature:lower(), searchQuery:lower()) then\n                table.insert(results, { feature, section })\n            end",
-                "3": "function SearchFeatures()\n    results = {} -- Clear the results table\n\n    -- Search for features matching the query\n    for section, features in pairs(mainTable) do\n        for i, feature in ipairs(features) do\n            if string.match(feature:lower(), searchQuery:lower()) then\n                table.insert(results, { feature, section })\n            end",
-                "4": "function SearchFeatures()\n    results = {} -- Clear the results table\n\n    -- Search for features matching the query\n    for section, features in pairs(mainTable) do\n        for i, feature in ipairs(features) do\n            if string.match(feature:lower(), searchQuery:lower()) then\n                table.insert(results, { feature, section })\n            end"
+                "1": "SearchFeatures()",
+                "2": "local searchButton = MenuLib.Button(\"Search\", SearchFeatures)",
+                "3": "function SearchFeatures()"
             }
         },
         {
@@ -555,7 +549,7 @@
             },
             "SLine": {
                 "1": "function ShouldThink(localPlayer)\n    local playerResources = entities.GetPlayerResources();\n    local allPlayerClasses = playerResources:GetPropDataTableInt(\"m_iPlayerClass\");\n    \n    local currentPlayerClass = allPlayerClasses[localPlayer:GetIndex() + 1];\n    local playingSpy = currentPlayerClass == TF2_Spy;\n\n    return playingSpy;\nend",
-                "2": "function ShouldThink(localPlayer)\n    local playerResources = entities.GetPlayerResources();\n    local allPlayerClasses = playerResources:GetPropDataTableInt(\"m_iPlayerClass\");\n    \n    local currentPlayerClass = allPlayerClasses[localPlayer:GetIndex() + 1];\n    local playingSpy = currentPlayerClass == TF2_Spy;\n\n    return playingSpy;\nend"
+                "2": "shouldThink = ShouldThink(localPlayer);"
             }
         },
         {
@@ -569,9 +563,9 @@
             },
             "SLine": {
                 "1": "function StrikePlayer(index, reason)\n    if playerStrikes[index] == nil then\n        playerStrikes[index] = 1\n    elseif playerStrikes[index] >= 0 then\n        playerStrikes[index] = playerStrikes[index] + 1\n        client.ChatPrintf(\"\\x04[CD] \\x02Player\\x05 \" .. index .. \" \\x02striked for:\\x05 \" .. reason)\n    end",
-                "2": "function StrikePlayer(index, reason)\n    if playerStrikes[index] == nil then\n        playerStrikes[index] = 1\n    elseif playerStrikes[index] >= 0 then\n        playerStrikes[index] = playerStrikes[index] + 1\n        client.ChatPrintf(\"\\x04[CD] \\x02Player\\x05 \" .. index .. \" \\x02striked for:\\x05 \" .. reason)\n    end",
-                "3": "function StrikePlayer(index, reason)\n    if playerStrikes[index] == nil then\n        playerStrikes[index] = 1\n    elseif playerStrikes[index] >= 0 then\n        playerStrikes[index] = playerStrikes[index] + 1\n        client.ChatPrintf(\"\\x04[CD] \\x02Player\\x05 \" .. index .. \" \\x02striked for:\\x05 \" .. reason)\n    end",
-                "4": "function StrikePlayer(index, reason)\n    if playerStrikes[index] == nil then\n        playerStrikes[index] = 1\n    elseif playerStrikes[index] >= 0 then\n        playerStrikes[index] = playerStrikes[index] + 1\n        client.ChatPrintf(\"\\x04[CD] \\x02Player\\x05 \" .. index .. \" \\x02striked for:\\x05 \" .. reason)\n    end"
+                "2": "StrikePlayer(player:GetIndex(), \"Packet was choked\")",
+                "3": "StrikePlayer(player:GetIndex(), \"Invalid Pitch\")",
+                "4": "StrikePlayer(player:GetIndex(), \"Invalid Angle Delta\")"
             }
         },
         {
@@ -610,7 +604,7 @@
                 "71": "function UnloadLib()"
             },
             "SLine": {
-                "1": "function UnloadLib()\n    lnxLib.Utils.UnloadPackages(\"lnxLib\")\n    lnxLib.Utils.UnloadPackages(\"LNXlib\")\nend"
+                "1": "function UnloadLib()"
             }
         },
         {
@@ -648,7 +642,7 @@
                 "246": "--pLocalOrigin = UpdateLocals()"
             },
             "SLine": {
-                "1": "function UpdateLocals()\n    --get pLocal eye level and set vector at our eye level to ensure we cehck distance from eyes\n    local viewOffset = vector3(0, 0, 75)\n    local adjustedHeight = pLocal:GetAbsOrigin() + viewOffset\n    viewheight = (adjustedHeight - pLocal:GetAbsOrigin()):Length()\n        -- eye level \n        local Vheight = Vector3(0, 0, viewheight)\n        pLocalOrigin = (pLocal:GetAbsOrigin() + Vheight)\n    return viewheight\nend",
+                "1": "function UpdateLocals()",
                 "2": "--pLocalOrigin = UpdateLocals()"
             }
         },
@@ -662,7 +656,8 @@
             },
             "SLine": {
                 "1": "function damage(event)\n\n    if (event:GetName() == 'player_hurt' ) then  -- Checks for player_hurt event\n\n        local localPlayer = entities.GetLocalPlayer();\n        victim = entities.GetByUserID(event:GetInt(\"userid\"))\n        local health = event:GetInt(\"health\")\n        local attacker = entities.GetByUserID(event:GetInt(\"attacker\"))\n        local damage = event:GetInt(\"damageamount\")\n        local weaponid = event:GetInt(\"weaponid\")\n       \n        if (attacker == nil or localPlayer:GetIndex() ~= attacker:GetIndex()) or victim:GetIndex() == localPlayer:GetIndex() then\n            return \n             end",
-                "2": "callbacks.Register(\"FireGameEvent\", \"damageDraw\", damage)"
+                "2": "local damage = event:GetInt(\"damageamount\")",
+                "3": "callbacks.Register(\"FireGameEvent\", \"damageDraw\", damage)"
             }
         },
         {
@@ -674,8 +669,9 @@
                 "118": "callbacks.Register(\"Draw\", \"MCT_Draw\", doDraw)                               -- Register the \"Draw\" callback"
             },
             "SLine": {
-                "1": "function doDraw()\n    if mEnable:GetValue() == false then return end",
-                "2": "callbacks.Register(\"Draw\", \"MCT_Draw\", doDraw)                               -- Register the \"Draw\" callback"
+                "1": "local myfont = draw.CreateFont( \"Verdana\", 16, 800 ) -- Create a font for doDraw",
+                "2": "local function doDraw()",
+                "3": "callbacks.Register(\"Draw\", \"MCT_Draw\", doDraw)                               -- Register the \"Draw\" callback"
             }
         },
         {
@@ -687,7 +683,7 @@
                 "156": "callbacks.Register(\"Draw\", \"MCT_Draw\", doDraw)                               -- Register the \"Draw\" callback"
             },
             "SLine": {
-                "1": "function doDraw()\n    if mEnable:GetValue() == false then return end"
+                "1": "No SLine"
             }
         },
         {
@@ -698,8 +694,7 @@
                 "40": "callbacks.Register(\"Draw\", \"mydraw\", doDraw)"
             },
             "SLine": {
-                "1": "function doDraw()\n    if engine.Con_IsVisible() or engine.IsGameUIVisible() then\n        return\n    end",
-                "2": "callbacks.Register(\"Draw\", \"mydraw\", doDraw)"
+                "1": "callbacks.Register(\"Draw\", \"mydraw\", doDraw)"
             }
         },
         {
@@ -736,9 +731,8 @@
             },
             "SLine": {
                 "1": "function get_class_entity(class_int, enemy_only)\n    local class_ents = {}\n    local players = entities.FindByClass(\"CTFPlayer\")\n    local localplayer = entities.GetLocalPlayer()\n    for _, v in pairs(players) do\n        local ent_classes = v:GetPropInt(\"m_iClass\")\n        local team_num = v:GetPropInt(\"m_iTeamNum\")\n        if enemy_only and team_num == localplayer:GetPropInt(\"m_iTeamNum\") then goto continue end",
-                "2": "function get_class_entity(class_int, enemy_only)\n    local class_ents = {}\n    local players = entities.FindByClass(\"CTFPlayer\")\n    local localplayer = entities.GetLocalPlayer()\n    for _, v in pairs(players) do\n        local ent_classes = v:GetPropInt(\"m_iClass\")\n        local team_num = v:GetPropInt(\"m_iTeamNum\")\n        if enemy_only and team_num == localplayer:GetPropInt(\"m_iTeamNum\") then goto continue end",
-                "3": "function get_class_entity(class_int, enemy_only)\n    local class_ents = {}\n    local players = entities.FindByClass(\"CTFPlayer\")\n    local localplayer = entities.GetLocalPlayer()\n    for _, v in pairs(players) do\n        local ent_classes = v:GetPropInt(\"m_iClass\")\n        local team_num = v:GetPropInt(\"m_iTeamNum\")\n        if enemy_only and team_num == localplayer:GetPropInt(\"m_iTeamNum\") then goto continue end",
-                "4": "function get_class_entity(class_int, enemy_only)\n    local class_ents = {}\n    local players = entities.FindByClass(\"CTFPlayer\")\n    local localplayer = entities.GetLocalPlayer()\n    for _, v in pairs(players) do\n        local ent_classes = v:GetPropInt(\"m_iClass\")\n        local team_num = v:GetPropInt(\"m_iTeamNum\")\n        if enemy_only and team_num == localplayer:GetPropInt(\"m_iTeamNum\") then goto continue end"
+                "2": "local spies = get_class_entity(8, true)",
+                "3": "function get_class_entity(class_int, enemy_only)\n    local class_ents = {}\n    local players = entities.FindByClass(\"CTFPlayer\")\n    local localplayer = entities.GetLocalPlayer()\n    for _, v in pairs(players) do\n        local ent_classes = v:GetPropInt(\"m_iClass\")\n        local team_num = v:GetPropInt(\"m_iTeamNum\")\n        if enemy_only and team_num == localplayer:GetPropInt(\"m_iTeamNum\") then goto continue end"
             }
         },
         {
@@ -797,7 +791,7 @@
                 "31": "callbacks.Register(\"CreateMove\", preventFalling) -- register the callback to be executed every frame"
             },
             "SLine": {
-                "1": "function preventFalling()\n    local player = getPlayer() -- get the player object\n    local position = player:getAbsOrigin() -- get the player's current position\n    local mapSize = getMapSize() -- get the size of the map\n    local move = getMove() -- get the player's current movement inputs\n    \n    local function isOnObstacle(x, y)\n        local worldPos = Vector(x, y, 0) -- create a Vector object with the x and y coordinates and a z value of 0\n        local mapPos = worldToMap(worldPos) -- convert the world position to a map position\n        local navPos = mapToWorld(mapPos) -- convert the map position back to a world position\n        return navPos.z ~= 0 -- return true if the z position of the nav position is not 0, indicating that it is on an obstacle\n      end",
+                "1": "local function preventFalling()",
                 "2": "callbacks.Register(\"CreateMove\", preventFalling) -- register the callback to be executed every frame"
             }
         },
@@ -809,7 +803,7 @@
                 "107": "callbacks.Register( \"Draw\", \"MCT_Script\", script )"
             },
             "SLine": {
-                "1": "function script()\n  if RandomToggle:GetValue() == true then\n\n    gui.SetValue(\"Anti Aim - Custom Yaw (Real)\", math.random(-180, 180 ))\n    gui.SetValue(\"Anti Aim - Custom Yaw (Fake)\", math.random(-180, 180 ))\n\n    gui.SetValue(\"Anti Aim - Pitch\", \"Custom\")\n\n    if FakeAngle == RealAngle then \n      RealAngle = somethingElse\n      end",
+                "1": "local function script()",
                 "2": "callbacks.Register( \"Draw\", \"MCT_Script\", script )"
             }
         },
@@ -821,7 +815,7 @@
                 "16": "function toggleCircle()"
             },
             "SLine": {
-                "1": "function toggleCircle()\n  -- Toggle circle state\n circle.show = not circle.show\n  -- Draw/Clear the circle depend"
+                "1": "function toggleCircle()"
             }
         }
     ]
