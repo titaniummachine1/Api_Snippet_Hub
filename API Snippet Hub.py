@@ -84,16 +84,15 @@ def on_search(event=None):
             cursor="hand2",
             padx=10,
             pady=10,
-            bg="#E0E0E0",
-            activebackground="#3E8E41",
+            bg="#adb5bd",
             command=lambda table=table: show_table_doc(table),
             width=50  # Set the width of the button
         )
         doc_button.grid(row=i, column=0, sticky="w")
         doc_button.bind("<Enter>", lambda event,
-                        btn=doc_button: btn.config(bg="#C0C0C0"))
+                        btn=doc_button: btn.config(bg="#dee2e6"))
         doc_button.bind("<Leave>", lambda event,
-                        btn=doc_button: btn.config(bg="#E0E0E0"))
+                        btn=doc_button: btn.config(bg="#adb5bd"))
 
     # Display the additional search results
     results = []
@@ -113,7 +112,7 @@ search_entry.pack(side="top")
 search_entry.bind("<KeyRelease>", lambda event: on_search())
 results_frame = tk.Frame(root)
 results_frame.pack()
-root.configure(bg="#1B1F23")
+root.configure(bg="#171515")
 # set the width and height of the window
 width = 1000
 height = 800
