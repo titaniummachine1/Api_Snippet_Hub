@@ -84,9 +84,10 @@ def on_search(event=None):
             cursor="hand2",
             padx=10,
             pady=10,
-            bg="#4CAF50",
+            bg="#E0E0E0",
             activebackground="#3E8E41",
             command=lambda table=table: show_table_doc(table),
+            width=50  # Set the width of the button
         )
         doc_button.grid(row=i, column=0, sticky="w")
         doc_button.bind("<Enter>", lambda event,
