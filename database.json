@@ -100,7 +100,7 @@
         },
         {
             "Title": "Menu Load button setup",
-            "subTitle": "setup load and unload",
+            "subTitle": "setup Load and Unload",
             "dLine": {
                 "14": "local function CreateMove(pCmd)",
                 "65": "callbacks.Unregister(\"CreateMove\", \"CreateMove_Freecam\")",

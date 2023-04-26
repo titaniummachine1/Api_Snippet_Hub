@@ -8,7 +8,7 @@ tables = download_database()
 
 
 
-INITIAL_RESULTS_COUNT = 10
+INITIAL_RESULTS_COUNT = 20
 def search_tables(query):
     # Search for tables that match the query and return up to 10 results
     results = []
@@ -70,16 +70,22 @@ def on_search(event=None):
     query = search_entry.get().lower()
     search_results = search_tables(query)
     
-    # Sort the results based on the similarity of their title to the search query
-    search_results.sort(key=lambda x: difflib.SequenceMatcher(None, x['Title'].lower(), query).ratio(), reverse=True)
-    
     # Clear the results frame
     for widget in results_frame.winfo_children():
         widget.destroy()
+    
+    # Create a canvas to hold the search results
+    canvas = tk.Canvas(results_frame, width=470, height=700)  # Set the width and height of the canvas
+    canvas.grid(row=0, column=0, sticky="news")
+    
+    # Create a frame to hold the search result buttons
+    button_frame = tk.Frame(canvas)
+    canvas.create_window((0, 0), window=button_frame, anchor="nw")
+    
     # Display the search results
-    for i, table in enumerate(search_results[:INITIAL_RESULTS_COUNT]):
+    for i, table in enumerate(search_results):
         doc_button = tk.Button(
-            results_frame,
+            button_frame,
             text=f"{table['Title']}\n{table['subTitle']}",
             font=("Arial", 12),
             fg="black",
@@ -95,13 +101,22 @@ def on_search(event=None):
                         btn=doc_button: btn.config(bg="#dee2e6"))
         doc_button.bind("<Leave>", lambda event,
                         btn=doc_button: btn.config(bg="#adb5bd"))
-
+    
+    # Update the canvas scrollregion to include all the search result buttons
+    button_frame.update_idletasks()
+    canvas.config(scrollregion=canvas.bbox("all"))
+    
+    # Create a vertical scrollbar and attach it to the canvas
+    scrollbar = tk.Scrollbar(results_frame, orient="vertical", command=canvas.yview)
+    scrollbar.grid(row=0, column=1, sticky="ns")
+    canvas.config(yscrollcommand=scrollbar.set)
     # Display the additional search results
     results = []
 
 
 # Create the main window and widgets
 root = tk.Tk()
+
 root.title("Api Snippet Hub")
 search_label = tk.Label(root, text="Search:", font=("Arial", 16))
 search_label.configure(bg=root.cget("bg"), fg="#1B1F23")
